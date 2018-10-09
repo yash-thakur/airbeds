@@ -1,4 +1,4 @@
-import React from "react";
+import Home from "./app/components/home";
 export default class Routes {
 
   apply(routeHandler) {
@@ -7,7 +7,7 @@ export default class Routes {
       {
         path: "/",
         exact: true,
-        component: () => <h1>Hello, World!</h1>,
+        component: Home,
       },
     ];
 
