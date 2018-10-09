@@ -5,7 +5,6 @@ import {
   Select, Layout, DatePicker, InputNumber, Slider, Card, Icon,
 } from "antd";
 
-
 const {
   Header, Sider, Content,
 } = Layout;
@@ -37,8 +36,11 @@ export default class Home extends Component {
     const { data, value, guests } = this.state;
     return (
       <Layout>
-        <Header>
-          <div style={{ textAlign: "center" }}>
+        <Header style={{ height: "auto" }}>
+          <div style={{ textAlign: "center", padding: "90px 90px 20px 90px" }}>
+            <h1 style={{ fontSize: "52px", color: "#fff" }}>
+              Book accomodation closest to the start of running races.
+            </h1>
             <Select
               showSearch
               value={value}
