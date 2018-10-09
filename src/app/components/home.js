@@ -17,7 +17,7 @@ export default class Home extends Component {
     data: [],
     value: undefined,
     guests: 2,
-  }
+  };
 
   onChange(value) {
     this.setState({ guests: value });
@@ -25,16 +25,13 @@ export default class Home extends Component {
 
   handleSearch = () => {
     fetch("http://localhost:3030/search?q=test").then(res => res.json()).then(data => this.setState({ data: _.map(data, item => ({ text: item.race_name, value: item.race_name })) }));
-  }
+  };
 
   handleChange = (value) => {
     this.setState({ value });
-  }
+  };
 
-  disabledDate = (current) => {
-    // Can not select days before today and today
-    return current && current < moment().endOf("day");
-  }
+  disabledDate = current => current && current < moment().endOf("day");
 
   render() {
     const { data, value, guests } = this.state;
