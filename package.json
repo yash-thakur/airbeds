@@ -25,7 +25,8 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@pawjs/pawjs": "^2.1.10"
+    "@pawjs/pawjs": "^2.1.10",
+    "@pawjs/sass": "^2.1.7"
   },
   "dependencies": {
     "antd": "^3.10.0"
