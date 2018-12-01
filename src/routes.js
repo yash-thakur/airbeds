@@ -1,8 +1,6 @@
 import Home from "./app/components/home";
 export default class Routes {
-
   apply(routeHandler) {
-
     const routes = [
       {
         path: "/",

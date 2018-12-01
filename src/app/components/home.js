@@ -12,25 +12,34 @@ const {
 const { RangePicker } = DatePicker;
 
 export default class Home extends Component {
-  state = {
-    data: [],
-    value: undefined,
-    guests: 2,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      value: undefined,
+      guests: 2,
+    };
+  }
+
+  componentDidMount() {
+    fetch("/api/getdata", {
+      method: "GET",
+    }).then(res => res.json()).then(data => console.log(data)).catch(err => console.log(err));
+  }
 
   onChange(value) {
     this.setState({ guests: value });
   }
 
-  handleSearch = () => {
-    fetch("http://localhost:3030/search?q=test").then(res => res.json()).then(data => this.setState({ data: _.map(data, item => ({ text: item.race_name, value: item.race_name })) }));
-  };
-
-  handleChange = (value) => {
-    this.setState({ value });
-  };
-
   disabledDate = current => current && current < moment().endOf("day");
+
+  handleSearch() {
+    fetch("http://localhost:3030/search?q=test").then(res => res.json()).then(data => this.setState({ data: _.map(data, item => ({ text: item.race_name, value: item.race_name })) }));
+  }
+
+  handleChange(value) {
+    this.setState({ value });
+  }
 
   render() {
     const { data, value, guests } = this.state;
@@ -49,8 +58,8 @@ export default class Home extends Component {
               defaultActiveFirstOption={false}
               showArrow={false}
               filterOption={false}
-              onSearch={this.handleSearch}
-              onChange={this.handleChange}
+              onSearch={() => this.handleSearch()}
+              onChange={val => this.handleChange(val)}
               notFoundContent={null}
               suffixIcon={<Icon type="search" theme="twoTone" twoToneColor="#52c41a" />}
             >
@@ -70,8 +79,9 @@ export default class Home extends Component {
                   <tr>
                     <td>
                       <RangePicker
-                        disabledDate={this.disabledDate}
+                        disabledDate={current => this.disabledDate(current)}
                         format="YYYY-MM-DD"
+                        onChange={val => this.onChange(val)}
                       />
                     </td>
                   </tr>
@@ -83,7 +93,12 @@ export default class Home extends Component {
                   </tr>
                   <tr>
                     <td>
-                      <InputNumber min={1} max={5} defaultValue={guests} onChange={this.onChange} />
+                      <InputNumber
+                        min={1}
+                        max={5}
+                        value={guests}
+                        onChange={val => this.onChange(val)}
+                      />
                     </td>
                   </tr>
                   <br />
@@ -94,7 +109,11 @@ export default class Home extends Component {
                   </tr>
                   <tr>
                     <td>
-                      <Slider range defaultValue={[20, 50]} />
+                      <Slider
+                        range
+                        defaultValue={[20, 50]}
+                        onChange={val => this.onChange(val)}
+                      />
                     </td>
                   </tr>
                   <br />
@@ -105,7 +124,10 @@ export default class Home extends Component {
                   </tr>
                   <tr>
                     <td>
-                      <Slider defaultValue={20} />
+                      <Slider
+                        defaultValue={20}
+                        onChange={val => this.onChange(val)}
+                      />
                     </td>
                   </tr>
                 </tbody>
