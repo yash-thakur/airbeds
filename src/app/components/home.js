@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import moment from "moment";
 import _ from "lodash";
 import {
-  Select, Layout, DatePicker, InputNumber, Slider, Card, Icon,
+  Select, Layout, DatePicker, InputNumber, Slider, Card, Icon, List, Pagination,
 } from "antd";
+import styles from "./home.less";
 
 const {
   Header, Sider, Content,
 } = Layout;
-
+const { Meta } = Card;
 const { RangePicker } = DatePicker;
 
 export default class Home extends Component {
@@ -19,12 +20,6 @@ export default class Home extends Component {
       value: undefined,
       guests: 2,
     };
-  }
-
-  componentDidMount() {
-    fetch("/api/getdata", {
-      method: "GET",
-    }).then(res => res.json()).then(data => console.log(data)).catch(err => console.log(err));
   }
 
   onChange(value) {
@@ -45,16 +40,16 @@ export default class Home extends Component {
     const { data, value, guests } = this.state;
     return (
       <Layout>
-        <Header style={{ height: "auto" }}>
-          <div style={{ textAlign: "center", padding: "90px 90px 20px 90px" }}>
-            <h1 style={{ fontSize: "52px", color: "#fff" }}>
+        <Header className={styles.header}>
+          <div className={styles.banner}>
+            <h1 className={styles["h1-style"]}>
               Book accomodation closest to the start of running races.
             </h1>
             <Select
               showSearch
               value={value}
               placeholder="Search by race e.g. Berlin Marathon"
-              style={{ width: "400px" }}
+              className={styles["search-bar"]}
               defaultActiveFirstOption={false}
               showArrow={false}
               filterOption={false}
@@ -70,71 +65,72 @@ export default class Home extends Component {
             </Select>
           </div>
         </Header>
-        <Layout>
-          <Sider style={{ height: "100vh" }}>
-            <Card style={{ width: 300, height: "100%" }}>
-              <table>
-                <tbody>
-                  <tr><td>When:</td></tr>
-                  <tr>
-                    <td>
+        <Layout className={styles["body-layout"]}>
+          <Sider className={styles.sidebar} width={300}>
+            <table>
+              <tbody>
+                <tr>
+                  <td className={styles["d-block"]}>
+                    <div>When:</div>
+                    <div>
                       <RangePicker
                         disabledDate={current => this.disabledDate(current)}
                         format="YYYY-MM-DD"
                         onChange={val => this.onChange(val)}
                       />
-                    </td>
-                  </tr>
-                  <br />
-                  <tr>
-                    <td>
-                      Guests:
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <InputNumber
-                        min={1}
-                        max={5}
-                        value={guests}
-                        onChange={val => this.onChange(val)}
-                      />
-                    </td>
-                  </tr>
-                  <br />
-                  <tr>
-                    <td>
-                      Price Range:
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <Slider
-                        range
-                        defaultValue={[20, 50]}
-                        onChange={val => this.onChange(val)}
-                      />
-                    </td>
-                  </tr>
-                  <br />
-                  <tr>
-                    <td>
-                      Distance to Start:
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <Slider
-                        defaultValue={20}
-                        onChange={val => this.onChange(val)}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </Card>
+                    </div>
+                  </td>
+                  <td className={styles["d-block"]}>
+                    <div>Guests:</div>
+                    <div>
+                      <InputNumber min={1} max={5} defaultValue={guests} onChange={this.onChange} />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={2}>
+                    <div>Price Range:</div>
+                    <div>
+                      <Slider range defaultValue={[20, 50]} />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colSpan={2}>
+                    <div>Distance to Start:</div>
+                    <div>
+                      <Slider defaultValue={20} />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </Sider>
-          <Content>Content</Content>
+          <Content>
+            <div>
+              <List
+                grid={{
+                  gutter: 16, xs: 1, sm: 2, md: 2, lg: 3, xl: 4, xxl: 3,
+                }}
+                className={styles.results}
+                dataSource={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]}
+                renderItem={item => (
+                  <List.Item>
+                    <Card
+                      hoverable
+                      cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+                    >
+                      <Meta
+                        title="Europe Street beat"
+                        description="www.instagram.com"
+                      />
+                    </Card>
+                  </List.Item>
+                )}
+              />
+              <Pagination defaultCurrent={1} total={50} className={styles.pagination} />
+            </div>
+          </Content>
         </Layout>
       </Layout>
     );

@@ -1,5 +1,6 @@
 import api from "./api";
 import DatabaseClient from "./api/database";
+
 export default class Server {
   constructor({ addMiddleware }) {
     addMiddleware(api);

@@ -1,12 +1,9 @@
-import Home from "./app/components/home";
+import HomePage from "./pages/home";
+
 export default class Routes {
   apply(routeHandler) {
     const routes = [
-      {
-        path: "/",
-        exact: true,
-        component: Home,
-      },
+      ...HomePage,
     ];
 
     routeHandler.hooks.initRoutes.tapPromise("AppRoutes", async () => {

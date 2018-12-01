@@ -10,7 +10,6 @@ export default async () => {
   const client = await MongoClient.connect(connectionUrl, { useNewUrlParser: true });
   let clientClosed = false;
 
-
   database = client.db(dbName);
   process.on("exit", () => {
     if (clientClosed) return;
