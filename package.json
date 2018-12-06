@@ -23,6 +23,7 @@
     "@pawjs/less": "^2.0.0",
     "@pawjs/pawjs": "^2.2.6",
     "antd": "^3.10.0",
-    "mongodb": "^3.1.9"
+    "mongodb": "^3.1.9",
+    "universal-fetch": "^1.0.0"
   }
 }
